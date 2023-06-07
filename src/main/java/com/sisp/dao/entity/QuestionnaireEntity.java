@@ -3,38 +3,21 @@ package com.sisp.dao.entity;
 import java.util.Date;
 
 public class QuestionnaireEntity {
-    String questionId;
-    String questionName;
-    String projectName;
-    String projectId;
-    String userId;
-    String createdBy;
-    String questionType;
-    Date publishDate;
-    Date closeDate;
+    private String id;
+    private String projectId;
+    private String userId;
+    private String type;
+    private String naireName;
+    private String content;
+    private Date publishDate;
+    private Date closeDate;
 
-    public String getQuestionId() {
-        return questionId;
+    public String getId() {
+        return id;
     }
 
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
-    }
-
-    public String getQuestionName() {
-        return questionName;
-    }
-
-    public void setQuestionName(String questionName) {
-        this.questionName = questionName;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getProjectId() {
@@ -53,20 +36,28 @@ public class QuestionnaireEntity {
         this.userId = userId;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getType() {
+        return type;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getQuestionType() {
-        return questionType;
+    public String getNaireName() {
+        return naireName;
     }
 
-    public void setQuestionType(String questionType) {
-        this.questionType = questionType;
+    public void setNaireName(String naireName) {
+        this.naireName = naireName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getPublishDate() {
@@ -83,5 +74,19 @@ public class QuestionnaireEntity {
 
     public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionnaireEntity{" +
+                "id='" + id + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", type='" + type + '\'' +
+                ", naireName='" + naireName + '\'' +
+                ", content='" + content + '\'' +
+                ", publishDate=" + publishDate +
+                ", closeDate=" + closeDate +
+                '}';
     }
 }

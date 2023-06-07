@@ -492,17 +492,129 @@ const handleModifyTitle = () => {
   $('#questionnaireDescription').val(questionnaireDescription)
 }
 
+//
+// const handleEditFinish = () => {
+//   let params = {}
+//   $.ajax({
+//     url: API_BASE_URL + '/modifyQuestionnaire',
+//     type: "POST",
+//     data: JSON.stringify(params),
+//     dataType: "json",
+//     contentType: "application/json",
+//     success(res) {
+//       console.log(res)
+//     }
+//   })
+// }
 
 const handleEditFinish = () => {
-  let params = {}
+  console.log(problem)
+  var params = {
+    questionnaireId: $util.getItem('questionnaireId'),
+  }
   $.ajax({
-    url: API_BASE_URL + '/modifyQuestionnaire',
+    url: API_BASE_URL + '/admin/deleteQuestionByQuestionnaireId',
     type: "POST",
     data: JSON.stringify(params),
     dataType: "json",
-    contentType: "application/jsoresn",
-    success(res) {
-      console.log(res)
+    contentType: "application/json",
+    async: false,
+    success: function (res) {
     }
   })
+  $.ajax({
+    url: API_BASE_URL + '/admin/deleteItemByQuestionnaireId',
+    type: "POST",
+    data: JSON.stringify(params),
+    dataType: "json",
+    contentType: "application/json",
+    async: false,
+    success: function (res) {
+    }
+  })
+  for (let i = 0; i < problem.length; i++) {
+    var params = {
+      questionContent: problem[i].problemName,
+      type: problem[i].type,
+      questionnaireId: $util.getItem('questionnaireId'),
+      projectId: $util.getItem('projectId'),
+      pos: i,
+      userId: $util.getItem('userInfo')[0].id,
+      mustAnswer: problem[i].mustAnswer,
+      title: problem[i].leftTitle,
+    }
+    if (problem[i].type == 5) {
+      params.title = problem[i].option[0].chooseTerm + "," + problem[i].option[problem[i].option.length - 1].chooseTerm
+    }
+    console.log(params)
+    $.ajax({
+      url: API_BASE_URL + '/admin/insertQuestionById',
+      type: "POST",
+      data: JSON.stringify(params),
+      dataType: "json",
+      contentType: "application/json",
+      async: false,
+      success: function (res) {
+        console.log(res)
+        $util.setItem('questionId', res.data)
+        status = true
+      }
+    })
+    if (problem[i].type == 4) {
+      var len = problem[i].leftTitle.split(",").length
+      for (let k = 0; k < len; k++) {
+        for (let j = 0; j < problem[i].option.length; j++) {
+          var params = {
+            questionnaireId: $util.getItem('questionnaireId'),
+            projectId: $util.getItem('projectId'),
+            userId: $util.getItem('userInfo')[0].id,
+            questionId: $util.getItem('questionId'),
+            pos: j,
+            itemContent: problem[i].option[j].chooseTerm,
+            itemCount: 0,
+            titlePos: k,
+          }
+          console.log(params)
+          $.ajax({
+            url: API_BASE_URL + '/admin/insertItemById',
+            type: "POST",
+            data: JSON.stringify(params),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (res) {
+              console.log(res)
+            }
+          })
+        }
+      }
+    } else {
+      for (let j = 0; j < problem[i].option.length; j++) {
+        var params = {
+          questionnaireId: $util.getItem('questionnaireId'),
+          projectId: $util.getItem('projectId'),
+          userId: $util.getItem('userInfo')[0].id,
+          questionId: $util.getItem('questionId'),
+          pos: j,
+          itemContent: problem[i].option[j].chooseTerm,
+          itemCount: 0,
+          titlePos: j,
+        }
+        if (problem[i].type == 5) {
+          params.itemContent = problem[i].option[j].fraction
+        }
+        console.log(params)
+        $.ajax({
+          url: API_BASE_URL + '/admin/insertItemById',
+          type: "POST",
+          data: JSON.stringify(params),
+          dataType: "json",
+          contentType: "application/json",
+          success: function (res) {
+            console.log(res)
+          }
+        })
+      }
+    }
+  }
+//  location.href = '/pages/questionnaire/index.html'
 }

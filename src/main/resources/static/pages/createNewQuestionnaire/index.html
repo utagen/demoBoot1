@@ -13,6 +13,7 @@
   <script src="../../static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
   <script src="../../static//bootstrap-3.4.1/js/bootstrap-datetimepicker.min.js"></script>
   <script src="../../static//bootstrap-3.4.1/js/bootstrap-datetimepicker.zh-CN.js"></script>
+  <script src="../../my-config.js"></script>
 </head>
 <body>
   <div id="headerPage"></div>
@@ -32,19 +33,19 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="startTime" class="col-sm-2 control-label">开始时间：</label>
+        <label for="startTime" class="col-sm-2 control-label">发布时间：</label>
         <div class="col-sm-4">
           <div class='input-group date' id='startTime'>
-            <input type='text' class="form-control" placeholder="请选择开始时间" />
+            <input type='text' class="form-control" id="publishDate" placeholder="请选择发布时间" />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
-        <label for="endTime" class="col-sm-2 control-label">结束时间：</label>
+        <label for="endTime" class="col-sm-2 control-label">关闭时间：</label>
         <div class="col-sm-4">
           <div class='input-group date' id='endTime'>
-            <input type='text' class="form-control" placeholder="请选择结束时间" />
+            <input type='text' class="form-control" id="closeDate" placeholder="请选择关闭时间" />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -53,7 +54,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="button" class="btn btn-primary" onclick="handleCreateQusetionnaire()">立即创建</button>
+          <button type="button" class="btn btn-primary" onclick="handleCreateQuestionnaire()">立即创建</button>
         </div>
       </div>
     </form>

@@ -1,9 +1,17 @@
 onload = () => {
   $('#headerUsername').text($util.getItem('userInfo')[0].username)
   $('#headerDivB').text('创建问卷')
+  console.log(($util.getItem('project_name')))
+  let projectName = $util.getItem('project_name');
+  $(document).ready(function () {
+    $('#belong_to_project').val(projectName)
+  });
+  // $('#belong_to_project').val($util.getPageParam('project_name'))
+  // console.log($('#belong_to_project').text())
 }
 
 const onCreateTemplate = () => {
+  $util.setItem("naireType", $('#selectLeo').val());
   location.href = "/pages/createNewQuestionnaire/index.html"
 }
 

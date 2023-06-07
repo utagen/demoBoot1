@@ -21,16 +21,16 @@ const fetchProjectList = () => {
       projectList = res.data
       $('#content').html('')
 
-      res.data.map(item => {
+      res.data.map(thisItem => {
         $('#content').append(`
           <div class="list">
             <div class="list-header">
-              <div>${item.projectName}</div>
+              <div>${thisItem.projectName}</div>
               <div>
-                <button type="button" class="btn btn-link" onclick="onCreateQuestionnaire()">创建问卷</button>
-                <button type="button" class="btn btn-link" onclick="onSeeProject('${item.id}')">查看</button>
-                <button type="button" class="btn btn-link" onclick="onEditProject('${item.id}')">编辑</button>
-                <button type="button" class="btn btn-link" onclick="onDelProject('${item.id}')">删除</button>
+                <button type="button" class="btn btn-link" onclick="onCreateQuestionnaire('${thisItem.id}', '${thisItem.projectName}')">创建问卷</button>
+                <button type="button" class="btn btn-link" onclick="onSeeProject('${thisItem.id}')">查看</button>
+                <button type="button" class="btn btn-link" onclick="onEditProject('${thisItem.id}')">编辑</button>
+                <button type="button" class="btn btn-link" onclick="onDelProject('${thisItem.id}')">删除</button>
               </div>
             </div>
             <div class="list-footer">
@@ -59,16 +59,16 @@ const selectProjectListByNameLike = () => {
       projectList = res.data
       $('#content').html('')
 
-      res.data.map(item => {
+      res.data.map(thisItem => {
         $('#content').append(`
           <div class="list">
             <div class="list-header">
-              <div>${item.projectName}</div>
+              <div>${thisItem.projectName}</div>
               <div>
-                <button type="button" class="btn btn-link" onclick="onCreateQuestionnaire()">创建问卷</button>
-                <button type="button" class="btn btn-link" onclick="onSeeProject('${item.id}')">查看</button>
-                <button type="button" class="btn btn-link" onclick="onEditProject('${item.id}')">编辑</button>
-                <button type="button" class="btn btn-link" onclick="onDelProject('${item.id}')">删除</button>
+                <button type="button" class="btn btn-link" onclick="onCreateQuestionnaire('${thisItem.id}', '${thisItem.projectName}')">创建问卷</button>
+                <button type="button" class="btn btn-link" onclick="onSeeProject('${thisItem.id}')">查看</button>
+                <button type="button" class="btn btn-link" onclick="onEditProject('${thisItem.id}')">编辑</button>
+                <button type="button" class="btn btn-link" onclick="onDelProject('${thisItem.id}')">删除</button>
               </div>
             </div>
             <div class="list-footer">
@@ -85,7 +85,9 @@ const onCreatePrject = () => {
   location.href = "/pages/createProject/index.html"
 }
 
-const onCreateQuestionnaire = () => {
+const onCreateQuestionnaire = (id, name) => {
+  $util.setItem('project_id', id)
+  $util.setItem('project_name', name)
   location.href = "/pages/createQuestionnaire/index.html"
 }
 
@@ -96,7 +98,7 @@ const onSeeProject = (id) => {
 }
 
 const onEditProject = (id) => {
-  let project = projectList.filter(item => item.id === id)[0]
+  let project = projectList.filter(thisItem => thisItem.id === id)[0]
   $util.setPageParam('editProject', project)
   location.href = "/pages/editProject/index.html"
 }
