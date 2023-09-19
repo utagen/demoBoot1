@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sisp.dao.QuestionnaireEntityMapper">
+    <insert id="insertQuestionnaire" parameterType="com.sisp.dao.entity.QuestionnaireEntity">
+        insert into questionnaire_info (id, userId, projectId,
+        type, questionnaireName, questionnaireContent, beginDate, endDate, state)
+        values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR}, #{questionnaireName,jdbcType=VARCHAR},
+        #{questionnaireContent,jdbcType=VARCHAR},
+        #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR})
+    </insert>
+    <select id="queryQuestionnaireById" parameterType="java.lang.String" resultType="com.sisp.dao.entity.QuestionnaireEntity">
+        SELECT
+        id,userId,projectId,type,questionnaireName,questionnaireContent,beginDate,endDate,state
+        FROM questionnaire_info
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+    <update id="updateQuestionnaireById" parameterType="com.sisp.dao.entity.ProjectEntity">
+        update questionnaire_info
+        <set>
+            <if test="questionnaireName != null">
+                questionnaireName = #{questionnaireName,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireContent != null">
+                questionnaireContent = #{questionnaireContent,jdbcType=VARCHAR},
+            </if>
+        </set>
+    </update>
+    <update id="updateQuestionnaireState" parameterType="com.sisp.dao.entity.QuestionnaireEntity">
+        update questionnaire_info
+        <set>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="queryQuestionnaireByProjectId" parameterType="java.lang.String" resultType="com.sisp.dao.entity.QuestionnaireEntity">
+        SELECT
+        id,userId,projectId,type,questionnaireName,questionnaireContent,beginDate,endDate,state
+        FROM questionnaire_info
+        WHERE projectId = #{projectId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertQuestionById" parameterType="com.sisp.dao.entity.QuestionEntity">
+        insert into question_info (id, userId, projectId, questionnaireId,
+        pos, type, mustAnswer, questionContent, title)
+        values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR},
+        #{questionnaireId,jdbcType=VARCHAR}, #{pos,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+        #{mustAnswer,jdbcType=VARCHAR}, #{questionContent,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+    </insert>
+    <select id="queryQuestionByQuestionnaireId" parameterType="java.lang.String" resultType="com.sisp.dao.entity.QuestionEntity">
+        SELECT
+        id,userId,projectId,questionnaireId,pos,type,mustAnswer,questionContent,title
+        FROM question_info
+        WHERE questionnaireId = #{questionnaireId,jdbcType=VARCHAR}
+        ORDER BY pos
+    </select>
+    <delete id="deleteQuestionByQuestionnaireId" parameterType="com.sisp.dao.entity.QuestionEntity">
+        delete from question_info
+        where questionnaireId = #{questionnaireId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insertItemById" parameterType="com.sisp.dao.entity.ItemEntity">
+        insert into item_info (id, userId, projectId, questionnaireId, questionId,
+        pos, itemContent, itemCount, titlePos)
+        values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR},
+        #{questionnaireId,jdbcType=VARCHAR}, #{questionId,jdbcType=VARCHAR}, #{pos,jdbcType=INTEGER},
+        #{itemContent,jdbcType=VARCHAR}, #{itemCount,jdbcType=INTEGER}, #{titlePos,jdbcType=INTEGER})
+    </insert>
+    <select id="queryItemByQuestionId" parameterType="java.lang.String" resultType="com.sisp.dao.entity.ItemEntity">
+        SELECT
+        id,userId,projectId,questionnaireId,questionId,pos,itemContent,itemCount,titlePos
+        FROM item_info
+        WHERE questionId = #{questionId,jdbcType=VARCHAR}
+        ORDER BY titlePos, pos
+    </select>
+    <delete id="deleteItemByQuestionnaireId" parameterType="com.sisp.dao.entity.ItemEntity">
+        delete from item_info
+        where questionnaireId = #{questionnaireId,jdbcType=VARCHAR}
+    </delete>
+    <update id="updateItemCount" parameterType="com.sisp.dao.entity.ItemEntity">
+        update item_info
+        <set>
+            <if test="itemCount != null">
+                itemCount = itemCount + 1,
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
