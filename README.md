@@ -1,0 +1,3 @@
+# demoBoot1
+东北大学计科实训1
+最终版本，这里有spring boot的基本开发完成时的样子供参考，mybatis用的是XML的方式进行开发，包括简单地加了点redis
